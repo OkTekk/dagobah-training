@@ -32,6 +32,21 @@ $ sudo -Hu postgres createdb -O galaxy galaxy
 
 We have created a new database with the name `galaxy`.
 
+```
+su - postgres
+createdb galaxydb
+psql -s galaxydb
+create user galaxyuser password 'galaxy2017';
+GRANT ALL PRIVILEGES ON DATABASE galaxydb TO galaxyuser;
+
+Change this 'ident' to 'md5' :
+/var/lib/pgsql/data/pg_hba.conf
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+su - postgres
+pg_ctl reload
+```
+
 ## Section 3 - Configure Galaxy
 
 Next, we need to configure Galaxy to use PostgreSQL. To do this, open up the Galaxy config file, `galaxy.ini`, in an editor as the galaxy user:
